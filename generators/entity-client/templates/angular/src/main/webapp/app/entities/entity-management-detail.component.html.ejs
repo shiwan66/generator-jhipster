@@ -36,25 +36,24 @@
                     const fieldType = fields[idx].fieldType;
                     const fieldTypeBlobContent = fields[idx].fieldTypeBlobContent; _%>                  
                     <div class="form-group m-form__group">
-                    <label jhiTranslate="<%= i18nKeyPrefix %>.<%= fieldName %>"<% if (fields[idx].javadoc) { if (enableTranslation) { %> [ngbTooltip]="'<%= i18nKeyPrefix %>.help.<%= fieldName %>' | translate"<% } else { %> ngbTooltip="<%= fields[idx].javadoc %>"<% } } %>><%= fields[idx].fieldNameHumanized %></label>
-
-                    <%_ if (fields[idx].fieldIsEnum) { _%>
-                    <span class="form-control m-input" jhiTranslate="{{'<%= angularAppName %>.<%= fieldType %>.' + <%= entityInstance %>.<%= fieldName %>}}">{{<%= entityInstance %>.<%= fieldName %>}}</span>
-                    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'image') { _%>
-                    <div *ngIf="<%= entityInstance %>.<%= fieldName %>">
-                        <a (click)="openFile(<%= entityInstance %>.<%= fieldName %>ContentType, <%= entityInstance %>.<%= fieldName %>)">
-                            <img [src]="'data:' + <%=entityInstance %>.<%= fieldName %>ContentType + ';base64,' + <%= entityInstance %>.<%= fieldName %>" style="max-width: 100%;" alt="<%=entityInstance %> image"/>
-                        </a>
-                        {{<%= entityInstance %>.<%= fieldName %>ContentType}}, {{byteSize(<%= entityInstance %>.<%= fieldName %>)}}
-                    </div>
-                    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'any') { _%>
-                    <div *ngIf="<%= entityInstance %>.<%= fieldName %>">
-                        <a (click)="openFile(<%= entityInstance %>.<%= fieldName %>ContentType, <%= entityInstance %>.<%= fieldName %>)" jhiTranslate="entity.action.open">open</a>
-                        {{<%= entityInstance %>.<%= fieldName %>ContentType}}, {{byteSize(<%= entityInstance %>.<%= fieldName %>)}}
-                    </div>
-                    <%_ } else { _%>
-                    <span class="form-control m-input">{{<%= entityInstance %>.<%= fieldName %>}}</span>
-                    <%_ } _%>                  
+                        <label jhiTranslate="<%= i18nKeyPrefix %>.<%= fieldName %>"<% if (fields[idx].javadoc) { if (enableTranslation) { %> [ngbTooltip]="'<%= i18nKeyPrefix %>.help.<%= fieldName %>' | translate"<% } else { %> ngbTooltip="<%= fields[idx].javadoc %>"<% } } %>><%= fields[idx].fieldNameHumanized %></label>
+                        <%_ if (fields[idx].fieldIsEnum) { _%>
+                        <span class="form-control m-input" jhiTranslate="{{'<%= angularAppName %>.<%= fieldType %>.' + <%= entityInstance %>.<%= fieldName %>}}">{{<%= entityInstance %>.<%= fieldName %>}}</span>
+                        <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'image') { _%>
+                        <div *ngIf="<%= entityInstance %>.<%= fieldName %>">
+                            <a (click)="openFile(<%= entityInstance %>.<%= fieldName %>ContentType, <%= entityInstance %>.<%= fieldName %>)">
+                                <img [src]="'data:' + <%=entityInstance %>.<%= fieldName %>ContentType + ';base64,' + <%= entityInstance %>.<%= fieldName %>" style="max-width: 100%;" alt="<%=entityInstance %> image"/>
+                            </a>
+                            {{<%= entityInstance %>.<%= fieldName %>ContentType}}, {{byteSize(<%= entityInstance %>.<%= fieldName %>)}}
+                        </div>
+                        <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'any') { _%>
+                        <div *ngIf="<%= entityInstance %>.<%= fieldName %>">
+                            <a (click)="openFile(<%= entityInstance %>.<%= fieldName %>ContentType, <%= entityInstance %>.<%= fieldName %>)" jhiTranslate="entity.action.open">open</a>
+                            {{<%= entityInstance %>.<%= fieldName %>ContentType}}, {{byteSize(<%= entityInstance %>.<%= fieldName %>)}}
+                        </div>
+                        <%_ } else { _%>
+                        <span class="form-control m-input">{{<%= entityInstance %>.<%= fieldName %>}}</span>
+                        <%_ } _%>                  
                     </div>
                     <%_ } _%>  
 
@@ -72,8 +71,7 @@
                     if (relationshipType === 'many-to-one'
                     || (relationshipType === 'one-to-one' && ownerSide === true)
                     || (relationshipType === 'many-to-many' && ownerSide === true)) { _%>
-                    <label jhiTranslate="<%= i18nKeyPrefix %>.<%= relationshipName %>"><%= relationshipNameHumanized %></label>
-                    
+                    <label jhiTranslate="<%= i18nKeyPrefix %>.<%= relationshipName %>"><%= relationshipNameHumanized %></label>                    
                     <%_ if (otherEntityName === 'user') { _%>
                     <%_ if (relationshipType === 'many-to-many') { _%>
                     <span class="form-control m-input" *ngFor="let <%= relationshipFieldName %> of <%= entityInstance %>.<%= relationshipFieldNamePlural %>; let last = last">
@@ -118,7 +116,7 @@
                     </button>
 
                     <button type="button"
-                            [routerLink]="['/entity/<%= entityUrl %>', <%= entityInstance %>.id, 'edit']"
+                            [routerLink]="['/<%= entityUrl %>', <%= entityInstance %>.id, 'edit']"
                             class="btn btn-primary">
                         <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
                     </button>

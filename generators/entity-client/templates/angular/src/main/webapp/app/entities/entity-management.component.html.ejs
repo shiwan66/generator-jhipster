@@ -35,6 +35,7 @@
             </div>
         </div>
         <div class="m-portlet__body">   
+            <jhi-entity-contains-search [field]="'id'" [fieldName]="'序号'" (serachChagne)="loadAll($event)" ></jhi-entity-contains-search>
             <div>
                 <<%= jhiPrefixDashed %>-alert></<%= jhiPrefixDashed %>-alert>
 
@@ -179,29 +180,28 @@
                     </table>
                 </div>
             </div>
+            <%_ if (databaseType !== 'cassandra') { _%>
+                <%_ if (pagination === 'pager') { _%>
+                <!-- Pager is not implemented yet, so this is normal pagination instead -->
+                <div *ngIf="<%=entityInstancePlural %> && <%=entityInstancePlural %>.length">
+                    <div class="d-flex justify-content-end">
+                        <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+                    </div>
+                </div>
+                <%_ } else if (pagination === 'pagination') { _%>
+                <div *ngIf="<%=entityInstancePlural %> && <%=entityInstancePlural %>.length">
+                    <div class="d-flex justify-content-end">
+                        <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+                    </div>
+                </div>
+                <%_ } _%>
+            <%_ } _%>
         </div>
     </div>
-
-<%_ if (databaseType !== 'cassandra') { _%>
-    <%_ if (pagination === 'pager') { _%>
-    <!-- Pager is not implemented yet, so this is normal pagination instead -->
-    <div *ngIf="<%=entityInstancePlural %> && <%=entityInstancePlural %>.length">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-        </div>
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
-        </div>
-    </div>
-    <%_ } else if (pagination === 'pagination') { _%>
-    <div *ngIf="<%=entityInstancePlural %> && <%=entityInstancePlural %>.length">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-        </div>
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
-        </div>
-    </div>
-    <%_ } _%>
-<%_ } _%>
 </div>

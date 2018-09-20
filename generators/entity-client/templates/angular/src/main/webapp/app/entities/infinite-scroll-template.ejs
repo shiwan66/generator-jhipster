@@ -57,7 +57,7 @@
         <%_ } _%>
     }
 
-    loadAll() {
+    loadAll(params?:Object) {
     <%_ if (searchEngine === 'elasticsearch') { _%>
         if (this.currentSearch) {
             this.<%= entityInstance %>Service.search({
@@ -72,11 +72,11 @@
             return;
         }
     <%_ } _%>
-        this.<%= entityInstance %>Service.query({
+        this.<%= entityInstance %>Service.query(Object.assign({}, params, {
             page: this.page,
             size: this.itemsPerPage,
             sort: this.sort()
-        }).subscribe(
+        )}).subscribe(
             (res: HttpResponse<I<%= entityAngularName %>[]>) => this.paginate<%= entityClassPlural %>(res.body, res.headers),
             (res: HttpErrorResponse) => this.onError(res.message)
         );

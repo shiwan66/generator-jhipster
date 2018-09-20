@@ -63,7 +63,7 @@
         <%_ } _%>
     }
 
-    loadAll() {
+    loadAll(params?: Object) {
         <%_ if (searchEngine === 'elasticsearch') { _%>
         if (this.currentSearch) {
             this.<%= entityInstance %>Service.search({
@@ -77,10 +77,10 @@
             return;
         }
         <%_ } _%>
-        this.<%= entityInstance %>Service.query(<%_ if (databaseType !== 'cassandra') { _%>{
+        this.<%= entityInstance %>Service.query(Object.assign({}, params,<%_ if (databaseType !== 'cassandra') { _%> {
             page: this.page - 1,
             size: this.itemsPerPage,
-            sort: this.sort()}<%_ } _%>).subscribe(
+            sort: this.sort()}<%_ } _%>)).subscribe(
                 (res: HttpResponse<I<%= entityAngularName %>[]>) => this.paginate<%= entityClassPlural %>(res.body, res.headers),
                 (res: HttpErrorResponse) => this.onError(res.message)
         );
