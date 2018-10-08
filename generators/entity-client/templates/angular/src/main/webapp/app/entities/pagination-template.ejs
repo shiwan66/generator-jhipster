@@ -95,7 +95,7 @@
     }
 
     transition() {
-        this.router.navigate(['/<%= entityUrl %>'], {queryParams:
+        this.router.navigate(['/entity/<%= entityUrl %>'], {queryParams:
             {
                 page: this.page,
                 size: this.itemsPerPage,
@@ -113,7 +113,7 @@
         <%_ if (searchEngine === 'elasticsearch') { _%>
         this.currentSearch = '';
         <%_ } _%>
-        this.router.navigate(['/<%= entityUrl %>', {
+        this.router.navigate(['/entity/<%= entityUrl %>', {
             page: this.page,
             sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
         }]);
